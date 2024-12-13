@@ -1,0 +1,4 @@
+*.venv
+*sustainability_rag/.env
+*sustainability_rag/__pycache__
+*docs/*
