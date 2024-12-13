@@ -62,3 +62,28 @@ python main_method2.py
 2. 因為不知道詳細什麼部分是最重要的，因此只能用比較通用的 prompt 來請 LLM 評價。解決方法：告訴 LLM 我們注重的評價標準是什麼
 3. 切割的方式可能有影響。解決方法：多嘗試不同的 chunk 或者不同的套件，如：unstructuredio
 4. 不知道 RAG 的結果是否符合預期。解決方法：若不合預期可以試試不同種 search 的方式，如：hybrid search
+
+## 程式說明
+### data2qdrant.py
+將永續報告書框架切割後的內容與 Embedding 存放進 Qdrant 向量資料庫
+
+### parse_pdf.py
+將 pdf 檔案的內容做切割，包含用 LlamaParse 和 PyPDF
+
+### parse_conclusion.py
+切割整理完的結論，因為這是 txt 檔的內容，所以另外再寫一個 py 檔
+
+### search.py
+將統一企業永續報告書切割完的內容與 Qdrant 中的資料進行檢索，還有翻譯的函數，所以裡面的物件包含檢索和翻譯的任務
+
+### main_method1.py
+將切割與評價的物件串聯在一起，總共分成三個部分 
+1. 第一次對永續報告書的每筆切割結果進行檢索並評價 -> ch_sustainability_evaluate.txt
+2. 第二次將評價結果切割後整理成內容少一點的評價結果 -> ch_evaluate_conclusion.txt
+3. 整理成最後的評價結果 -> method_1_final_conclusion.txt
+
+### main_method2.py
+將切割與評價的物件串聯在一起，總共分成三個部分 
+1. 第一次對永續報告書的每筆切割結果進行翻譯，然後再進行檢索並評價 -> en_sustainability_evaluate.txt
+2. 第二次將評價結果切割後整理成內容少一點的評價結果 -> en_evaluate_conclusion.txt
+3. 整理成最後的評價結果，然後將結果翻譯回繁體中文 -> method_2_final_conclusion.txt
